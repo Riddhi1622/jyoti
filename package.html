@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Travel Form</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Package Form</h2>
+                <form id="packageForm">
+                    <div class="mb-3">
+                        <label for="place" class="form-label">Place</label>
+                        <input type="text" class="form-control" id="place" value="Paris">
+                    </div>
+                    <div class="mb-3">
+                        <label for="location" class="form-label">Location</label>
+                        <input type="text" class="form-control" id="location" value="Eiffel Tower">
+                    </div>
+                    <div class="mb-3">
+                        <label for="price" class="form-label">Price</label>
+                        <input type="text" class="form-control" id="price" value="$500">
+                    </div>
+                    <div class="mb-3">
+                        <label for="discount" class="form-label">Discount</label>
+                        <input type="text" class="form-control" id="discount" value="10%">
+                    </div>
+                    <div class="mb-3">
+                        <label for="finalPrice" class="form-label">Final Price</label>
+                        <input type="text" class="form-control" id="finalPrice" value="$450">
+                    </div>
+                    <div class="mb-3">
+                        <label for="departure" class="form-label">Departure</label>
+                        <input type="text" class="form-control" id="departure" value="2024-04-01">
+                    </div>
+                    <div class="mb-3">
+                        <label for="arrival" class="form-label">Arrival</label>
+                        <input type="text" class="form-control" id="arrival" value="2024-04-10">
+                    </div>
+                    <div class="mb-3">
+                        <label for="packageImage" class="form-label">Image</label>
+                        <input type="file" class="form-control" id="packageImage">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Package</button>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h2>Activities Form</h2>
+                <form id="activitiesForm">
+                    <div class="mb-3">
+                        <label for="activityPlace" class="form-label">Place</label>
+                        <input type="text" class="form-control" id="activityPlace" value="Paris">
+                    </div>
+                    <div class="mb-3">
+                        <label for="activity1" class="form-label">Activity 1</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="activity1" value="Sightseeing">
+                            <button class="btn btn-outline-secondary" type="button" id="addActivity1">+</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="activity2" class="form-label">Activity 2</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="activity2" value="Shopping">
+                            <button class="btn btn-outline-secondary" type="button" id="addActivity2">+</button>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="activity3" class="form-label">Activity 3</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="activity3" value="Dining">
+                            <button class="btn btn-outline-secondary" type="button" id="addActivity3">+</button>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Activities</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Function to add or remove activity fields dynamically
+        function addRemoveActivity(activityId, action) {
+            const activityField = document.getElementById(activityId);
+            const activityCounter = document.getElementById(`add${activityId}`);
+
+            // Get the current value of the counter
+            let counter = parseInt(activityCounter.dataset.counter);
+
+            // Add or remove activity field based on the action
+            if (action === 'add') {
+                counter++;
+                const newActivityField = document.createElement('div');
+                newActivityField.classList.add('mb-3');
+                newActivityField.innerHTML = `
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="${activityId}-${counter}" value="">
+                        <button class="btn btn-outline-secondary" type="button" id="add${activityId}">+</button>
+                    </div>
+                `; // Fix: Added closing backtick (`) at the end of the template literal
+                activityField.appendChild(newActivityField);
+            } else if (action === 'remove') {
+                if (counter > 1) {
+                    const lastActivityField = document.getElementById(`${activityId}-${counter}`);
+                    activityField.removeChild(lastActivityField);
+                    counter--;
+                }
+            }
+
+            // Update the counter value
+            activityCounter.dataset.counter = counter;
+        }
+    </script>
